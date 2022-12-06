@@ -19,7 +19,7 @@ function LoginMsg(props){
   return(<>
     <h5>Success</h5>
     <button type="submit" 
-      className="btn btn-light" 
+      className="btn btn-primary" 
       onClick={() => props.setShow(true)}>
         Authenticate again
     </button>
@@ -68,7 +68,7 @@ function LoginForm(props){
       value={password} 
       onChange={e => setPassword(e.currentTarget.value)}/><br/>
 
-    <button type="submit" className="btn btn-light" onClick={handle}>Login</button>
+    <button type="submit" className="btn btn-primary" onClick={handle}>Login</button>
    
   </>);
 }

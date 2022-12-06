@@ -18,7 +18,7 @@ function CreateMsg(props){
   return(<>
     <h5>Success</h5>
     <button type="submit" 
-      className="btn btn-light" 
+      className="btn btn-primary" 
       onClick={() => props.setShow(true)}>Add another account</button>
   </>);
 }
@@ -70,7 +70,7 @@ function handle(){
       onChange={e => setPassword(e.currentTarget.value)}/><br/>
 
     <button type="submit" 
-      className="btn btn-light" 
+      className="btn btn-primary" 
       onClick={handle}>Create Account</button>
 
   </>);
