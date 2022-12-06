@@ -6,7 +6,7 @@ const UserContext = React.createContext(null);
 function Card(props){
 
   return (
-    <div className={"card border-dark mb-3"} style={{maxWidth: "18rem"}}>
+    <div className={"card border-dark mb-3"} style={{maxWidth: "30rem"}}>
       <div className="card-header">{props.header}</div>
       <div className="card-body text-dark">
         {props.title && (<h5 className="card-title">{props.title}</h5>)}
