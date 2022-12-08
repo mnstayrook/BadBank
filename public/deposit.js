@@ -27,22 +27,40 @@ function DepositMsg(props){
 
 function DepositForm(props){
   const [email, setEmail]   = React.useState('');
-  const [amount, setAmount] = React.useState('');
-  const ctx = React.useContext(UserContext);  
-
+  const [password, setPassword] = React.useState('');
+  const [balance, setBalance] = React.useState('');
+  const [data, setData] = React.useState('');
+  
   function handle(){
-    console.log(email,amount);
-    const user = ctx.users.find((user) => user.email == email);
-    if (!user) {
-      props.setStatus('fail!');
-      return;      
-    }
+    console.log(email, password, balance);
+    const url = `/account/deposit/${email}/${balance}`;
+    const all = `/account/all`;
+    (async () => {
+      var res = await fetch(url);
+      var data = await res.json();
+      console.log(data);
+    })();
 
-    user.balance = user.balance + Number(amount);
-    console.log(user);
-    props.setStatus('');      
+
+    props.setStatus('');
     props.setShow(false);
   }
+  
+  // const ctx = React.useContext(UserContext);  
+
+  // function handle(){
+  //   console.log(email,amount);
+  //   const user = ctx.users.find((user) => user.email == email);
+  //   if (!user) {
+  //     props.setStatus('fail!');
+  //     return;      
+  //   }
+
+  //   user.balance = user.balance + Number(amount);
+  //   console.log(user);
+  //   props.setStatus('');      
+  //   props.setShow(false);
+  // }
 
   return(<>
 
@@ -56,7 +74,7 @@ function DepositForm(props){
     <input type="number" 
       className="form-control" 
       placeholder="Enter amount" 
-      value={amount} onChange={e => setAmount(e.currentTarget.value)}/><br/>
+      value={balance} onChange={e => setBalance(e.currentTarget.value)}/><br/>
 
     <button type="submit" 
       className="btn btn-light" 

@@ -7,6 +7,16 @@ var dal         = require("./dal.js");
 app.use(express.static('public'));
 app.use(cors());
 
+// read all accounts
+app.get('/account/all', function (req, res) {
+    dal.all().then((docs) => {
+        console.log(docs);
+        res.send(docs);
+    });
+});
+
+// retrieve balance
+
 // create user account
 app.get('/account/create/:name/:email/:password', function (req, res) {
     // else create user
@@ -17,13 +27,26 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
         });
 });
 
-// all accounts
-app.get('/account/all', function (req, res) {
-    dal.all().then((docs) => {
-        console.log(docs);
-        res.send(docs);
-    });
+// deposit monies
+app.get('/account/deposit/:email/:balance', function (req, res){
+    dal.deposit(req.params.email, req.params.password, req.params.balance)
+        .then((user) => {
+            console.log(user);
+            res.send(user);
+        });
 });
+
+// login to account
+app.get('/account/login/:email/:password', function (req, res){
+    dal.login(req.params.email, req.params.password)
+        .then((user) => {
+            console.log(user);
+            res.send(user);
+        });
+});
+
+// withdraw monies
+
 
 var port = 4000;
 app.listen(port);
