@@ -29,7 +29,7 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
 
 // deposit monies
 app.get('/account/deposit/:email/:balance', function (req, res){
-    dal.deposit(req.params.email, req.params.password, req.params.balance)
+    dal.deposit(req.params.email, req.params.balance)
         .then((user) => {
             console.log(user);
             res.send(user);

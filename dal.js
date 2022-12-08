@@ -40,8 +40,8 @@ function create(name, email, password){
 function deposit(email, balance){
     return new Promise((resolve, reject) => {
         const collection = db.collection('users');
-        const doc = {email, password, balance};
-        collection.update(doc, {w:1}, function(err, result) {
+        const doc = {email, balance};
+        collection.update(doc, function(err, result) {
             err ? reject(err) : resolve(doc);
         });
     });

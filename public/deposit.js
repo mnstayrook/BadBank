@@ -32,7 +32,7 @@ function DepositForm(props){
   const [data, setData] = React.useState('');
   
   function handle(){
-    console.log(email, password, balance);
+    console.log(email, balance);
     const url = `/account/deposit/${email}/${balance}`;
     const all = `/account/all`;
     (async () => {
