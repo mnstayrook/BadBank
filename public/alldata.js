@@ -7,7 +7,14 @@ function AllData(){
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      setData(JSON.stringify(data));
+      setData(data.map((data, index) => (
+        <ul className="User Data" key={index}>
+          <li>Name: {data.name}</li>
+          <li>Email: {data.email}</li>
+          <li>Password: {data.password}</li>
+          <li>Balance: {data.balance}</li>   
+        </ul>
+        )));
     });
   }, []);
   
