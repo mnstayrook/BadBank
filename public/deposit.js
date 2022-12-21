@@ -37,7 +37,7 @@ function DepositForm(props){
   function handle(){
     console.log(email, balance);
     const url = `/account/deposit/${email}/${balance}`;
-    const all = `/account/all`;
+    // const all = `/account/all`;
   
     fetch(url)
       .then(response => response.json())

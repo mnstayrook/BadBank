@@ -22,8 +22,16 @@ function all(){
     });
 };
 
-// Retrieve Balance of chosen account
-
+function findUserByEmail(email){
+    console.log("in findUserByEmail");
+    
+    return new Promise((resolve,reject) => {
+        db.collection('users')
+        .findOne({email:email},function(err,result){
+            err ? reject(err) : resolve(result);
+        })
+    });
+}
 
 // Create User Account
 function create(name, email, password){
@@ -35,17 +43,6 @@ function create(name, email, password){
         });
     });
 };
-
-function findUserByEmail(email){
-    console.log("in findUserByEmail");
-    
-    return new Promise((resolve,reject)=>{
-        db.collection('users')
-        .findOne({email:email},function(err,result){
-            err ? reject(err) : resolve(result);
-        })
-    });
-}
 
 // Deposit money into chosen account
 function deposit(email, depositBalance){
@@ -98,4 +95,4 @@ function login(email, password){
 
 
 
-module.exports = {create, deposit, findUserByEmail, all};
+module.exports = {create, balance, deposit, findUserByEmail, all};

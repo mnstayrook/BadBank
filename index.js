@@ -7,7 +7,7 @@ var dal         = require("./dal.js");
 app.use(express.static('public'));
 app.use(cors());
 
-// read all accounts
+// read all accounts in alldata.js
 app.get('/account/all', function (req, res) {
     dal.all().then((docs) => {
         console.log(docs);
@@ -15,9 +15,7 @@ app.get('/account/all', function (req, res) {
     });
 });
 
-// retrieve balance
-
-// create user account
+// create user account in createaccount.js
 app.get('/account/create/:name/:email/:password', function (req, res) {
     // else create user
     dal.create(req.params.name, req.params.email, req.params.password)
@@ -27,7 +25,7 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
         });
 });
 
-// deposit monies
+// deposit monies in deposit.js
 app.get('/account/deposit/:email/:balance', function (req, res){
     dal.deposit(req.params.email, req.params.balance)
         .then((user) => {
@@ -39,7 +37,7 @@ app.get('/account/deposit/:email/:balance', function (req, res){
         });
 });
 
-// login to account
+// login to account in login.js
 app.get('/account/login/:email/:password', function (req, res){
     dal.login(req.params.email, req.params.password)
         .then((user) => {
@@ -48,9 +46,9 @@ app.get('/account/login/:email/:password', function (req, res){
         });
 });
 
-// withdraw monies
+// withdraw monies in withdraw.js
 
 
-var port = 4000;
+var port = 3000;
 app.listen(port);
 console.log('Running on port ' + port);
