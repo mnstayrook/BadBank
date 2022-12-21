@@ -32,7 +32,10 @@ app.get('/account/deposit/:email/:balance', function (req, res){
     dal.deposit(req.params.email, req.params.balance)
         .then((user) => {
             console.log(user);
-            res.send(user);
+            res.send({message:"Success"});
+        }).catch((err) => {
+            console.log("root index.js " + err.message);
+            res.send({message:err.message});
         });
 });
 

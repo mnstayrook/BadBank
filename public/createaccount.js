@@ -4,7 +4,6 @@ function CreateAccount(){
 
   return (
     <Card
-      bgcolor="primary"
       header="Create Account"
       status={status}
       body={show ? 
@@ -28,14 +27,7 @@ function CreateForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
   
-  // const ctx = React.useContext(UserContext);  
-  // function handle(){
-  //   console.log(name,email,password);
-  //   ctx.users.push({name,email,password});
-  //   props.setShow(false);
-  // }    
-
-function handle(){
+  function handle(){
   console.log(name, email, password);
   const url = `/account/create/${name}/${email}/${password}`;
   (async () => {

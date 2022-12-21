@@ -4,7 +4,6 @@ function Balance(){
 
   return (
     <Card
-      bgcolor="info"
       header="Balance"
       status={status}
       body={show ?

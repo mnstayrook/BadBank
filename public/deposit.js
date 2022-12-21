@@ -1,29 +1,32 @@
 function Deposit(){
-  const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');  
+  const [show, setShow]       = React.useState(true);
+  const [status, setStatus]   = React.useState('');
+  const [message, setMessage] = React.useState('outer default message');
 
   return (
     <Card
-      bgcolor="warning"
       header="Deposit"
       status={status}
       body={show ? 
-        <DepositForm setShow={setShow} setStatus={setStatus}/> :
-        <DepositMsg setShow={setShow}/>}
+        <DepositForm setShow={setShow} setStatus={setStatus} setMessage={setMessage}/> :
+        <DepositMsg setShow={setShow} message={message}/>}
     />
   )
 }
 
 function DepositMsg(props){
-  return (<>
-    <h5>Success</h5>
+  // const [message, setMessage] = React.useState('default message');
+  
+  return (
+  <>
+    <h5>{props.message}</h5>
     <button type="submit" 
-      className="btn btn-light" 
+      className="btn btn-primary" 
       onClick={() => props.setShow(true)}>
         Deposit again
     </button>
   </>);
-} 
+}; 
 
 function DepositForm(props){
   const [email, setEmail]   = React.useState('');
@@ -35,12 +38,14 @@ function DepositForm(props){
     console.log(email, balance);
     const url = `/account/deposit/${email}/${balance}`;
     const all = `/account/all`;
-    (async () => {
-      var res = await fetch(url);
-      var data = await res.json();
-      console.log(data);
-    })();
-
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let message = data.message;
+        console.log("data = " + data);
+        props.setMessage(message);
+    });
 
     props.setStatus('');
     props.setShow(false);

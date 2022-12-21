@@ -36,14 +36,49 @@ function create(name, email, password){
     });
 };
 
+function findUserByEmail(email){
+    console.log("in findUserByEmail");
+    
+    return new Promise((resolve,reject)=>{
+        db.collection('users')
+        .findOne({email:email},function(err,result){
+            err ? reject(err) : resolve(result);
+        })
+    });
+}
+
 // Deposit money into chosen account
-function deposit(email, balance){
+function deposit(email, depositBalance){
+    console.log("in deposit");
     return new Promise((resolve, reject) => {
-        const collection = db.collection('users');
-        const doc = {email, balance};
-        collection.update(doc, function(err, result) {
-            err ? reject(err) : resolve(doc);
-        });
+        if (depositBalance <= 0){
+            console.log('Deposit balance is less than 0')
+            reject({
+                message: "Error\: Please enter a value above zero."
+            });
+            return;
+        }else{
+            resolve(
+                // let currentBalance;
+                findUserByEmail(email)
+                    .then((selectedUser)=>{console.table(selectedUser); 
+                        let currentBalance = selectedUser.balance;
+                        console.log("currentBalance = " + currentBalance);
+                        console.table(currentBalance);
+                        
+                        let newBalance = Number(currentBalance) + Number(depositBalance);
+                        console.log(`newBalance is ${newBalance}`);
+                        const collection = db.collection('users');
+                        collection.updateOne({
+                            email: email},
+                            {$set:{balance:newBalance}
+                        });
+                    
+                    })
+                    .catch((err)=>{console.log(err);})
+            );
+        }
+        
     });
 };
 
@@ -55,8 +90,12 @@ function login(email, password){
 }
 
 // Withdraw from chosen account
+        // if (balance > currentBalance){
+        //     reject(alert("ERROR: Please fill in a number less than your balance."))
+        // }
 
 
 
 
-module.exports = {create, deposit, all};
+
+module.exports = {create, deposit, findUserByEmail, all};
