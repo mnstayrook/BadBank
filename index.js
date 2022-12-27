@@ -42,12 +42,24 @@ app.get('/account/login/:email/:password', function (req, res){
     dal.login(req.params.email, req.params.password)
         .then((user) => {
             console.log(user);
-            res.send(user);
+            res.send({message:"Success"});
+        }).catch((err) => {
+            console.log("root index.js " + err.message);
+            res.send({message:err.message});
         });
 });
 
 // withdraw monies in withdraw.js
-
+app.get('/account/withdraw/:email/:balance', function (req, res){
+    dal.withdraw(req.params.email, req.params.balance)
+        .then((user) => {
+            console.log("From root index:" + user);
+            res.send({message:"Success"});
+        }).catch((err) => {
+            console.log("root index.js " + err.message);
+            res.send({message:err.message});
+        });
+});
 
 var port = 3000;
 app.listen(port);

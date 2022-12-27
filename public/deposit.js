@@ -1,3 +1,5 @@
+// still showing a success message when there is no account to deposit into.
+
 function Deposit(){
   const [show, setShow]       = React.useState(true);
   const [status, setStatus]   = React.useState('');
@@ -15,10 +17,7 @@ function Deposit(){
 }
 
 function DepositMsg(props){
-  // const [message, setMessage] = React.useState('default message');
-  
-  return (
-  <>
+  return (<>
     <h5>{props.message}</h5>
     <button type="submit" 
       className="btn btn-primary" 
@@ -37,7 +36,6 @@ function DepositForm(props){
   function handle(){
     console.log(email, balance);
     const url = `/account/deposit/${email}/${balance}`;
-    // const all = `/account/all`;
   
     fetch(url)
       .then(response => response.json())
@@ -50,22 +48,6 @@ function DepositForm(props){
     props.setStatus('');
     props.setShow(false);
   }
-  
-  // const ctx = React.useContext(UserContext);  
-
-  // function handle(){
-  //   console.log(email,amount);
-  //   const user = ctx.users.find((user) => user.email == email);
-  //   if (!user) {
-  //     props.setStatus('fail!');
-  //     return;      
-  //   }
-
-  //   user.balance = user.balance + Number(amount);
-  //   console.log(user);
-  //   props.setStatus('');      
-  //   props.setShow(false);
-  // }
 
   return(<>
 
@@ -82,7 +64,7 @@ function DepositForm(props){
       value={balance} onChange={e => setBalance(e.currentTarget.value)}/><br/>
 
     <button type="submit" 
-      className="btn btn-light" 
+      className="btn btn-primary" 
       onClick={handle}>Deposit</button>
 
   </>);
