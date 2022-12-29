@@ -24,10 +24,10 @@ function WithdrawMsg(props){
 }
 
 function WithdrawForm(props){
-  const [email, setEmail]       = React.useState('');
-  // const [password, setPassword] = React.useState('');
-  const [balance, setBalance]   = React.useState('');
-  const [data, setData]         = React.useState('');
+  const [email, setEmail]           = React.useState('');
+  // const [password, setPassword]  = React.useState('');
+  const [balance, setBalance]       = React.useState('');
+  const [data, setData]             = React.useState('');
 
   function handle(){
     console.log(email, balance);
@@ -63,8 +63,7 @@ function WithdrawForm(props){
     <input type="number" 
       className="form-control" 
       placeholder="Enter amount" 
-      value={balance} 
-      onChange={e => setBalance(e.currentTarget.value)}/><br/>
+      value={balance} onChange={e => setBalance(e.currentTarget.value)}/><br/>
 
     <button type="submit" 
       className="btn btn-primary" 
