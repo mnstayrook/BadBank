@@ -10,7 +10,7 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
     db = client.db('myproject');
 });
 
-// AllData file - GET all data
+// alldata.js
 function all(){
     return new Promise((resolve, reject) => {
         const customers = db
@@ -46,7 +46,7 @@ function findUserByPassword(password){
     });
 };
 
-// Create User Account
+// createaccount.js
 function create(name, email, password){
     return new Promise((resolve, reject) => {
         const collection = db.collection('users');
@@ -57,7 +57,7 @@ function create(name, email, password){
     });
 };
 
-// Deposit money into chosen account
+// deposit.js
 function deposit(email, depositBalance){
     console.log("in deposit");
 
@@ -70,7 +70,6 @@ function deposit(email, depositBalance){
             return;
         }else{
             resolve(
-                // let currentBalance;
                 findUserByEmail(email)
                     .then((selectedUser)=>{console.table(selectedUser); 
                         let currentBalance = selectedUser.balance;
@@ -93,8 +92,7 @@ function deposit(email, depositBalance){
     });
 };
 
-// Login to chosen account
-// still need to create!!!!!
+// login.js
 function login(email, password){
     console.log('logging in');
 
@@ -121,39 +119,27 @@ function login(email, password){
     // });
 }
 
-// Withdraw from chosen account
-function withdraw(email, password, withdrawAmount){
+// withdraw.js
+function withdraw(email, withdrawBalance){
     console.log("in withdraw");
 
     return new Promise((resolve, reject) => {
-        if (withdrawAmount > balance){
-            console.log('Withdraw will incur overdraft. Please enter a number that is equal to or less than your current balance.')
-            reject({
-                message: "Error\: Withdraw will incur overdraft. Please enter a number that is equal to or less than your current balance."
-            });
-            return;
-        }else{
             resolve(
-                // let currentBalance;
                 findUserByEmail(email) // && findUserByPassword(password)
                     .then((selectedUser)=>{console.table(selectedUser); 
-                        let currentBalance = selectedUser.balance;
+                        const currentBalance = selectedUser.balance;
                         console.log("currentBalance = " + currentBalance);
                         console.table(currentBalance);
                         
                         let newBalance = Number(currentBalance) - Number(withdrawBalance);
                         console.log(`newBalance is ${newBalance}`);
-                        const collection = db.collection('users');
-                        collection.updateOne(
-                            {email: email},
-                            {password: password},
+                        db.collection('users').updateOne(
+                            {email:email},
                             {$set:{balance: newBalance}}
                         );
                     })
                     .catch((err)=>{console.log(err);})
-            );
-        }
-        
+            );        
     });
 }
 

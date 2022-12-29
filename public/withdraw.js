@@ -63,6 +63,7 @@ function WithdrawForm(props){
     <input type="number" 
       className="form-control" 
       placeholder="Enter amount" 
+      id="withdrawAmt"
       value={balance} onChange={e => setBalance(e.currentTarget.value)}/><br/>
 
     <button type="submit" 
