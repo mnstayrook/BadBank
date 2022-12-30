@@ -117,7 +117,7 @@ function login(email, password){
     //     }
         
     // });
-}
+};
 
 // withdraw.js
 function withdraw(email, withdrawBalance){
