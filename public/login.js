@@ -5,7 +5,6 @@ function Login(){
   return (
     <Card
       txtcolor="black"
-      bgcolor="secondary"
       header="Login"
       status={status}
       body={show ? 
@@ -30,26 +29,37 @@ function LoginForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const ctx = React.useContext(UserContext);  
-
+  
   function handle(){
-    const user = ctx.users.find((user) => user.email == email);
-    console.log(user);
     console.log(email, password);
-    if (!user) {
-      console.log('one')      
-      props.setStatus('fail!')      
-      return;      
-    }
-    if (user.password == password) {
-      console.log('two')            
-      props.setStatus('');
-      props.setShow(false);
-      return;      
-    }
-    console.log('three')          
-    props.setStatus('fail!');        
+    const url = `/account/login/${email}/${password}`;
+    (async () => {
+      var res = await fetch(url);
+      var data = await res.json();
+      console.log(data);
+    })();
+    props.setShow(false);
   }
+  // const ctx = React.useContext(UserContext);  
+
+  // function handle(){
+  //   const user = ctx.users.find((user) => user.email == email);
+  //   console.log(user);
+  //   console.log(email, password);
+  //   if (!user) {
+  //     console.log('one')      
+  //     props.setStatus('fail!')      
+  //     return;      
+  //   }
+  //   if (user.password == password) {
+  //     console.log('two')            
+  //     props.setStatus('');
+  //     props.setShow(false);
+  //     return;      
+  //   }
+  //   console.log('three')          
+  //   props.setStatus('fail!');        
+  // }
 
 
   return (<>
