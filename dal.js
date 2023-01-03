@@ -1,4 +1,6 @@
 const MongoClient   = require('mongodb').MongoClient;
+// Windows: 'mongodb://127.0.0.1:27017';
+// Mac:     'mongodb://localhost:27017';
 const url           = 'mongodb://127.0.0.1:27017';
 let db              = null;
 
