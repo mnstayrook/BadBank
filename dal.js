@@ -95,28 +95,40 @@ function deposit(email, depositBalance){
 // login.js
 function login(email, password){
     console.log('logging in');
+    
+    return new Promise ((resolve, reject) => {
+        let user = findUserByEmail(email);
 
-    // return new Promise((resolve, reject) => {
+        if (user.password !== password){
+            reject(Error("Invalid Password"));
+        }
+
+        console.table(user);
+        resolve(user);
+    
+        // return new Promise((resolve, reject) => {
 
 
-    //     if (/* user does not exist */){
-    //         // error message to create an account;
-    //         return;
-    //     }else{
-    //         resolve(
-    //             // find the user by email to confirm;
-    //             findUserByEmail(email)
-    //                 // .then login with data from user
-    //                 // show account details and put name in upper corner
-    //                 // must sustain across all pages
-    //                 .then((selectedUser)=>{console.table(selectedUser); 
+        //     if (/* user does not exist */){
+        //         // error message to create an account;
+        //         return;
+        //     }else{
+        //         resolve(
+        //             // find the user by email to confirm;
+        //             findUserByEmail(email)
+        //                 // .then login with data from user
+        //                 // show account details and put name in upper corner
+        //                 // must sustain across all pages
+        //                 .then((selectedUser)=>{console.table(selectedUser); 
 
-    //                 })
-    //                 .catch((err)=>{console.log(err);})
-    //         );
-    //     }
+        //                 })
+        //                 .catch((err)=>{console.log(err);})
+        //         );
+        //     }
+            
+        // });
         
-    // });
+    });
 };
 
 // withdraw.js
@@ -144,4 +156,4 @@ function withdraw(email, withdrawBalance){
 }
 
 
-module.exports = {create, withdraw, deposit, findUserByEmail, findUserByPassword, all};
+module.exports = {create, login, withdraw, deposit, findUserByEmail, findUserByPassword, all};

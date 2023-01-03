@@ -22,7 +22,10 @@ function NavBar(){
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#/alldata/">AllData</a>
-          </li>          
+          </li>
+          {/* <li className="nav-item">
+            <a className="nav-link" href="#/logout/">Logout</a>
+          </li>         */}
         </ul>
       </div>
     </nav>

@@ -22,6 +22,11 @@ function LoginMsg(props){
       onClick={() => props.setShow(true)}>
         Authenticate again
     </button>
+    <br/>
+    <button type="submit"
+    className="btn btn-primary">
+      Logout (coming soon)
+    </button>
   </>);
 }
 
@@ -55,7 +60,7 @@ function LoginForm(props){
   //     console.log('two')            
   //     props.setStatus('');
   //     props.setShow(false);
-  //     return;      
+  //     return;
   //   }
   //   console.log('three')          
   //   props.setStatus('fail!');        
