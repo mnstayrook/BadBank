@@ -2,84 +2,85 @@ const express       = require("express");
 const app           = express();
 const cors          = require("cors");
 const dal           = require("./dal.js");
-const session       = require("express-session");
-const MongoStore    = require("connect-mongo");
-const crypto        = require('crypto');
+// const session       = require("express-session");
+// const MongoStore    = require("connect-mongo");
+// const crypto        = require('crypto');
 
 const port          = 3000;
 
-// used to serve static files from public directory
+// // used to serve static files from public directory
 app.use(express.static('public'));
 app.use(cors());
 
-/* --- Session Authentication --- */
-//for secretString
-function randomString(length, chars) {
-  if (!chars) {
-    throw new Error('chars is undefined');
-  };
-  const charsLength = chars.length;
-  if (charsLength > 100) {
-    throw new Error('Argument \'chars\' should not have more than 100 characters'
-      + ', otherwise unpredictability will be broken');
-  };
+// /* --- Session Authentication (NOT IN USE) --- */
+// //for secretString
+// function randomString(length, chars) {
+//   if (!chars) {
+//     throw new Error('chars is undefined');
+//   };
+//   const charsLength = chars.length;
+//   if (charsLength > 100) {
+//     throw new Error('Argument \'chars\' should not have more than 100 characters'
+//       + ', otherwise unpredictability will be broken');
+//   };
 
-  const randomBytes = crypto.randomBytes(length);
-  let result = new Array(length);
+//   const randomBytes = crypto.randomBytes(length);
+//   let result = new Array(length);
 
-  let cursor = 0;
-  for (let i = 0; i < length; i++) {
-    cursor += randomBytes[i];
-    result[i] = chars[cursor % charsLength];
-  };
-  return result.join('');
-};
+//   let cursor = 0;
+//   for (let i = 0; i < length; i++) {
+//     cursor += randomBytes[i];
+//     result[i] = chars[cursor % charsLength];
+//   };
+//   return result.join('');
+// };
 
-// for secret in session
-function secretString(length) {
-  return randomString(length,
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-};
-const oneDay = 1000 * 60 * 60 * 24;
+// // for secret in session
+// function secretString(length) {
+//   return randomString(length,
+//     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+// };
+// const oneDay = 1000 * 60 * 60 * 24;
 
-// to authenticate sessions on browsers
-app.use(session({
-    secret: secretString(25),
-    saveUninitialized: true,
-    cookie: { maxAge: oneDay },
-    resave: false,
-    store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017',
-        ttl: 14 * 24 * 60 * 60,
-        autoRemove: 'native'
-    })
-}));
+// // to authenticate sessions on browsers
+// app.use(session({
+//     secret: secretString(25),
+//     saveUninitialized: true,
+//     cookie: { maxAge: oneDay },
+//     resave: false,
+//     store: MongoStore.create({
+//         mongoUrl: 'mongodb://localhost:27017',
+//         ttl: 14 * 24 * 60 * 60,
+//         autoRemove: 'native'
+//     })
+// }));
 
-// Terminates session; link to "logout" button... somehow
-// does it need an entry on DAL.JS?
-app.get('/account/logout', (req,res) => {
-    req.session.destroy(err => {
-        if(err){
-            console.log(err);
-        } else {
-            res.send('Session is destroyed')
-        }
-    });
-});
+// // Terminates session; link to "logout" button... somehow
+// // does it need an entry on DAL.JS?
+// app.get('/account/logout', (req,res) => {
+//     req.session.destroy(err => {
+//         if(err){
+//             console.log(err);
+//         } else {
+//             res.send('Session is destroyed')
+//         }
+//     });
+// });
 
 // Home page; if user is logged in, it will display logout link
 // NOTE: NOT WORKING
-app.get('/',(req,res) => {
-    session=req.session;
-    console.log(req.session);
-    if(session.userid){
-        res.send("Welcome User <a href=\'/logout'>click to logout</a>");
-    }else {
-        res.send('session is live');
-    }
-});
+// app.get('/',(req,res) => {
+//     session=req.session;
+//     console.log(req.session);
+//     if(session.userid){
+//         res.send("Welcome User <a href=\'/logout'>click to logout</a>");
+//     }else {
+//         res.send('session is live');
+//     }
+// });
 
 // alldata.js
+
 app.get('/account/all', function (req, res) {
     dal.all().then((docs) => {
         console.log(docs);
