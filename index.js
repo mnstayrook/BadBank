@@ -95,6 +95,10 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
         .then((user) => {
             console.log(user);
             res.send(user);
+            res.send({message:"Root Index: Success"});
+        }).catch((err) => {
+            console.log("Root Index: " + err.message);
+            res.send({message:err.message});
         });
 });
 
@@ -103,9 +107,9 @@ app.get('/account/deposit/:email/:balance', function (req, res){
     dal.deposit(req.params.email, req.params.balance)
         .then((user) => {
             console.log(user);
-            res.send({message:"Success"});
+            res.send({message:"Root Index: Success"});
         }).catch((err) => {
-            console.log("root index.js " + err.message);
+            console.log("Root Index: " + err.message);
             res.send({message:err.message});
         });
 });
@@ -128,10 +132,10 @@ app.get('/account/login/:email/:password', function (req, res){
 
     dal.login(req.params.email, req.params.password)
         .then((user) => {
-            console.log(user + " is logged in");
-            res.send({message:"Success",user:user});
+            console.log("Root Index: " + user + " is logged in");
+            res.send({message:"Root Index: Success",user:user});
         }).catch((err) => {
-            console.log("root index.js " + err.message);
+            console.log("Root Index:" + err.message);
             res.send({message:err.message});
         });
 });
@@ -140,14 +144,14 @@ app.get('/account/login/:email/:password', function (req, res){
 app.get('/account/withdraw/:email/:balance', function (req, res){
     dal.withdraw(req.params.email, req.params.balance)
         .then((user) => {
-            console.log("From root index:" + user);
-            res.send({message:"Success"});
+            console.log("Root Index: " + user);
+            res.send({message:"Root Index: Success"});
             res.send(user);
         }).catch((err) => {
-            console.log("root index.js " + err.message);
+            console.log("Root Index: " + err.message);
             res.send({message:err.message});
         });
 });
 
 app.listen(port);
-console.log('Running on port ' + port);
+console.log('Root Index: Running on port ' + port);
