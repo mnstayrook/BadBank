@@ -6,7 +6,7 @@ let db              = null;
 
 // Connect to Mongo
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
-    console.log("Connected successfully to DB server.");
+    console.log("DAL: Connected successfully to DB server.");
 
     // Connect to myproject database
     db = client.db('myproject');
@@ -14,6 +14,7 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
 
 // alldata.js
 function all(){
+    console.log("DAL: in All Data");
     return new Promise((resolve, reject) => {
         const customers = db
             .collection('users')
@@ -26,7 +27,7 @@ function all(){
 
 // Finds user by email for functions below
 function findUserByEmail(email){
-    console.log("in findUserByEmail");
+    console.log("DAL: in findUserByEmail");
     
     return new Promise((resolve,reject) => {
         db.collection('users')
@@ -38,7 +39,7 @@ function findUserByEmail(email){
 
 // Finds user by password for functions below
 function findUserByPassword(password){
-    console.log('in findUserByPassword');
+    console.log('DAL: in findUserByPassword');
 
     return new Promise((resolve, reject) => {
         db.collection('users')
@@ -50,6 +51,7 @@ function findUserByPassword(password){
 
 // createaccount.js
 function create(name, email, password){
+    console.log("DAL: in create account");
     return new Promise((resolve, reject) => {
         const collection = db.collection('users');
         const doc = {name, email, password, balance: 0};
@@ -61,7 +63,7 @@ function create(name, email, password){
 
 // deposit.js
 function deposit(email, depositBalance){
-    console.log("in deposit");
+    console.log("DAL: in deposit");
 
     return new Promise((resolve, reject) => {
         if (depositBalance <= 0){
@@ -96,15 +98,17 @@ function deposit(email, depositBalance){
 
 // login.js
 function login(email, password){
-    console.log('logging in');
+    console.log('DAL: in login');
     
     return new Promise ((resolve, reject) => {
         findUserByEmail(email).then((selectedUser)=>{
-            console.log("user.password: " + selectedUser.password);
-            console.log("password: " + password);
+            console.log("DAL user.password: " + selectedUser.password);
+            console.log("DAL password: " + password);
+
             if (selectedUser.password !== password){
-                reject(Error("Invalid Password"));
+                reject(Error("DAL: Invalid Password"));
             }
+            console.log("DAL: Logged in successfully");
             resolve(selectedUser);
         });
 
@@ -137,7 +141,7 @@ function login(email, password){
 
 // withdraw.js
 function withdraw(email, withdrawBalance){
-    console.log("in withdraw");
+    console.log("DAL: in withdraw");
 
     return new Promise((resolve, reject) => {
         if (withdrawBalance <= 0){
