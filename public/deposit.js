@@ -22,7 +22,7 @@ function DepositMsg(props){
     <button type="submit" 
       className="btn btn-primary" 
       onClick={() => props.setShow(true)}>
-        Deposit again
+        Deposit Again
     </button>
   </>);
 }; 
@@ -41,8 +41,9 @@ function DepositForm(props){
       .then(response => response.json())
       .then(data => {
         let message = data.message;
-        console.log("data = " + data);
         props.setMessage(message);
+        console.log("data = " + data);
+        console.log(message);
     });
 
     props.setStatus('');

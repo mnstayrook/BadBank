@@ -99,14 +99,16 @@ function login(email, password){
     console.log('logging in');
     
     return new Promise ((resolve, reject) => {
-        let user = findUserByEmail(email);
+        findUserByEmail(email).then((selectedUser)=>{
+            console.log("user.password: " + selectedUser.password);
+            console.log("password: " + password);
+            if (selectedUser.password !== password){
+                reject(Error("Invalid Password"));
+            }
+            resolve(selectedUser);
+        });
 
-        if (user.password !== password){
-            reject(Error("Invalid Password"));
-        }
-
-        console.table(user);
-        resolve(user);
+        //console.table(user);
     
         // return new Promise((resolve, reject) => {
 
@@ -138,10 +140,17 @@ function withdraw(email, withdrawBalance){
     console.log("in withdraw");
 
     return new Promise((resolve, reject) => {
+        if (withdrawBalance <= 0){
+            console.log('Withdraw balance is less than 0')
+            reject({
+                message: "Error\: Please enter a value above zero."
+            });
+            return;
+        }else{
             resolve(
                 findUserByEmail(email) // && findUserByPassword(password)
                     .then((selectedUser)=>{console.table(selectedUser); 
-                        const currentBalance = selectedUser.balance;
+                        let currentBalance = selectedUser.balance;
                         console.log("currentBalance = " + currentBalance);
                         console.table(currentBalance);
                         
@@ -154,8 +163,8 @@ function withdraw(email, withdrawBalance){
                     })
                     .catch((err)=>{console.log(err);})
             );        
+        };
     });
-}
-
+};
 
 module.exports = {create, login, withdraw, deposit, findUserByEmail, findUserByPassword, all};

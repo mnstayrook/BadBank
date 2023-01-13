@@ -19,24 +19,21 @@ function WithdrawMsg(props){
     <h5>{props.message}</h5>
     <button type="submit" 
       className="btn btn-primary" 
-      onClick={() => props.setShow(true)}>Withdraw Again</button>
+      onClick={() => props.setShow(true)}>
+      Withdraw Again
+      </button>
   </>);
 }
 
 function WithdrawForm(props){
   const [email, setEmail]           = React.useState('');
-  // const [password, setPassword]  = React.useState('');
+  const [password, setPassword]     = React.useState('');
   const [balance, setBalance]       = React.useState('');
   const [data, setData]             = React.useState('');
-
+  
   function handle(){
     console.log(email, balance);
     const url = `/account/withdraw/${email}/${balance}`;
-
-    // if (withdrawAmount > balance){
-    //   console.log('Withdraw will incur overdraft. Please enter a number that is equal to or less than your current balance.');
-    //   return;
-    // }
 
     fetch(url)
       .then(response => response.json())

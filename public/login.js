@@ -33,7 +33,7 @@ function LoginMsg(props){
 function LoginForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
-
+  const ctx = React.useContect(UserContext);
   
   function handle(){
     console.log(email, password);
@@ -42,6 +42,7 @@ function LoginForm(props){
       var res = await fetch(url);
       var data = await res.json();
       console.log(data);
+      ctx = data.user;
     })();
     props.setShow(false);
   }

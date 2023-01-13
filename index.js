@@ -128,8 +128,8 @@ app.get('/account/login/:email/:password', function (req, res){
 
     dal.login(req.params.email, req.params.password)
         .then((user) => {
-            console.log(user);
-            res.send({message:"Success"});
+            console.log(user + " is logged in");
+            res.send({message:"Success",user:user});
         }).catch((err) => {
             console.log("root index.js " + err.message);
             res.send({message:err.message});
