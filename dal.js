@@ -102,8 +102,18 @@ function login(email, password){
     
     return new Promise ((resolve, reject) => {
         findUserByEmail(email).then((selectedUser)=>{
-            console.log("DAL user.password: " + selectedUser.password);
-            console.log("DAL password: " + password);
+                console.log("DAL: selectedUser.password: " + selectedUser.password);
+                console.log("DAL: password: " + password);
+
+                let user = db.collection('users').user;
+                
+                if (selectedUser !== user){
+                    console.log("DAL: Error: user does not exist.")
+                    reject({
+                        message: "DAL: Error\: Email or password was incorrect. Try again."
+                    });
+                    return;
+                }
 
             if (selectedUser.password !== password){
                 reject(Error("DAL: Invalid Password"));
@@ -113,7 +123,6 @@ function login(email, password){
         });
 
         //console.table(user);
-    
         // return new Promise((resolve, reject) => {
 
 
@@ -136,7 +145,6 @@ function login(email, password){
             
         // });
         
-    });
 };
 
 // withdraw.js
@@ -145,9 +153,9 @@ function withdraw(email, withdrawBalance){
 
     return new Promise((resolve, reject) => {
         if (withdrawBalance <= 0){
-            console.log('Withdraw balance is less than 0')
+            console.log('DAL: Withdraw balance is less than 0')
             reject({
-                message: "Error\: Please enter a value above zero."
+                message: "DAL: Error\: Please enter a value above zero."
             });
             return;
         }else{
@@ -155,11 +163,11 @@ function withdraw(email, withdrawBalance){
                 findUserByEmail(email) // && findUserByPassword(password)
                     .then((selectedUser)=>{console.table(selectedUser); 
                         let currentBalance = selectedUser.balance;
-                        console.log("currentBalance = " + currentBalance);
+                        console.log("DAL: currentBalance = " + currentBalance);
                         console.table(currentBalance);
                         
                         let newBalance = Number(currentBalance) - Number(withdrawBalance);
-                        console.log(`newBalance is ${newBalance}`);
+                        console.log(`DAL: newBalance is ${newBalance}`);
                         db.collection('users').updateOne(
                             {email:email},
                             {$set:{balance: newBalance}}
