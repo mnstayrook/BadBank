@@ -101,50 +101,23 @@ function login(email, password){
     console.log('DAL: in login');
     
     return new Promise ((resolve, reject) => {
-        findUserByEmail(email).then((selectedUser)=>{
+            findUserByEmail(email).then((selectedUser)=>{
                 console.log("DAL: selectedUser.password: " + selectedUser.password);
                 console.log("DAL: password: " + password);
 
-                let user = db.collection('users').user;
-                
-                if (selectedUser !== user){
-                    console.log("DAL: Error: user does not exist.")
-                    reject({
-                        message: "DAL: Error\: Email or password was incorrect. Try again."
-                    });
+                if (selectedUser.password !== password){
+                    console.log("Password does not equal user")
+                    
+                    // Shows on Card that invalid password had been entered but email was correct
+                    reject(Error("Invalid Password"));
                     return;
                 }
-
-            if (selectedUser.password !== password){
-                reject(Error("DAL: Invalid Password"));
-            }
-            console.log("DAL: Logged in successfully");
-            resolve(selectedUser);
-        });
-
-        //console.table(user);
-        // return new Promise((resolve, reject) => {
-
-
-        //     if (/* user does not exist */){
-        //         // error message to create an account;
-        //         return;
-        //     }else{
-        //         resolve(
-        //             // find the user by email to confirm;
-        //             findUserByEmail(email)
-        //                 // .then login with data from user
-        //                 // show account details and put name in upper corner
-        //                 // must sustain across all pages
-        //                 .then((selectedUser)=>{console.table(selectedUser); 
-
-        //                 })
-        //                 .catch((err)=>{console.log(err);})
-        //         );
-        //     }
-            
-        // });
-        
+                console.log("DAL: Logged in successfully");
+                console.table(selectedUser);
+                resolve(selectedUser);
+            })
+            .catch(() => {reject({message: "User Not Found In Database"})})
+    });       
 };
 
 // withdraw.js

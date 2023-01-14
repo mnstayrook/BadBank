@@ -1,9 +1,13 @@
 function Spa() {
+  const [ctx,setCtx] = React.useState({name:"null"});
+  const value = {ctx,setCtx};
+
+
   return (
     <HashRouter>
       <div>
+        <UserContext.Provider value={value}>
         <NavBar/>        
-        <UserContext.Provider value={{users:[{name:'Abel',email:'abel@mit.edu',password:'secret',balance:100}]}}>
           <div className="container" style={{padding: "20px"}}>
             <Route path="/" exact component={Home} />
             <Route path="/CreateAccount/" component={CreateAccount} />

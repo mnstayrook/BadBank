@@ -30,11 +30,12 @@ function WithdrawForm(props){
   const [password, setPassword]     = React.useState('');
   const [balance, setBalance]       = React.useState('');
   const [data, setData]             = React.useState('');
-  
+  const {ctx,setCtx}                         = React.useContext(UserContext);
+  console.table(ctx)
+
   function handle(){
     console.log(email, balance);
     const url = `/account/withdraw/${email}/${balance}`;
-
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -49,6 +50,7 @@ function WithdrawForm(props){
   }
 
   return(<>
+    User: {ctx.name} <br/>
 
     Email<br/>
     <input type="input" 

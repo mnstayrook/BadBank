@@ -133,10 +133,12 @@ app.get('/account/login/:email/:password', function (req, res){
     dal.login(req.params.email, req.params.password)
         .then((user) => {
             console.log("Root Index: " + user + " is logged in");
-            res.send({message:"Root Index: Success",user:user});
+            
+            // Shows success after successful login
+            res.send({message:"Success",user:user});
         }).catch((err) => {
             console.log("Root Index:" + err.message);
-            res.send({message:err.message});
+            res.send({message:err.message, user:{name:"Null"}});
         });
 });
 

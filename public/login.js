@@ -1,6 +1,8 @@
 function Login(){
   const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');    
+  const [status, setStatus] = React.useState('');
+  const [message, setMessage] = React.useState('outer default message');
+
 
   return (
     <Card
@@ -8,15 +10,15 @@ function Login(){
       header="Login"
       status={status}
       body={show ? 
-        <LoginForm setShow={setShow} setStatus={setStatus}/> :
-        <LoginMsg setShow={setShow} setStatus={setStatus}/>}
+        <LoginForm setShow={setShow} setStatus={setStatus} setMessage={setMessage}/> :
+        <LoginMsg setShow={setShow} setStatus={setStatus} message={message}/>}
     />
   ) 
 }
 
 function LoginMsg(props){
   return(<>
-    <h5>Success</h5>
+    <h5>{props.message}</h5>
     <button type="submit" 
       className="btn btn-primary" 
       onClick={() => props.setShow(true)}>
@@ -33,39 +35,32 @@ function LoginMsg(props){
 function LoginForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
-  const ctx = React.useContect(UserContext);
+  const {ctx, setCtx}        = React.useContext(UserContext);
   
   function handle(){
     console.log(email, password);
     const url = `/account/login/${email}/${password}`;
     (async () => {
-      var res = await fetch(url);
-      var data = await res.json();
-      console.log(data);
-      ctx = data.user;
+      var res = await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          let message = data.message;
+          props.setMessage(message);
+          console.log('data = ' + data);
+          console.log(message);
+          if (data.user.name !== "Null")
+            setCtx(data.user);
+            console.table(ctx);
+        })
+        .catch((err)=>{props.setMessage("Please enter username and password.")});
+     
+      // console.log(data);
+      // ctx = data.user;
     })();
-    props.setShow(false);
-  }
-  // const ctx = React.useContext(UserContext);  
 
-  // function handle(){
-  //   const user = ctx.users.find((user) => user.email == email);
-  //   console.log(user);
-  //   console.log(email, password);
-  //   if (!user) {
-  //     console.log('one')      
-  //     props.setStatus('fail!')      
-  //     return;      
-  //   }
-  //   if (user.password == password) {
-  //     console.log('two')            
-  //     props.setStatus('');
-  //     props.setShow(false);
-  //     return;
-  //   }
-  //   console.log('three')          
-  //   props.setStatus('fail!');        
-  // }
+    props.setStatus('');
+    props.setShow(false);
+  };
 
 
   return (<>
