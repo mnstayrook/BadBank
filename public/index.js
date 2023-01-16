@@ -1,7 +1,16 @@
 function Spa() {
-  const [ctx,setCtx] = React.useState({name:"null"});
-  const value = {ctx,setCtx};
+  const [ctx,setCtx] = React.useState();
+  const value = {ctx,setCtx,checkUser};
 
+  // checks [ctx] status to see if it is null. If so, it replaces name;
+  // if not, it gets destructured into array to pass name.
+  function checkUser(ctx){
+    if (ctx == null){
+      return {name:"Not Logged In"};
+    } else {
+      return ctx;
+    };
+  };
 
   return (
     <HashRouter>

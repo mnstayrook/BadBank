@@ -17,6 +17,8 @@ function Login(){
 }
 
 function LoginMsg(props){
+  const {ctx, setCtx}        = React.useContext(UserContext);
+
   return(<>
     <h5>{props.message}</h5>
     <button type="submit" 
@@ -26,8 +28,9 @@ function LoginMsg(props){
     </button>
     <br/>
     <button type="submit"
-    className="btn btn-primary">
-      Logout (coming soon)
+    className="btn btn-primary"
+    onClick={() => setCtx(null)}>
+      Logout
     </button>
   </>);
 }
@@ -61,7 +64,6 @@ function LoginForm(props){
     props.setStatus('');
     props.setShow(false);
   };
-
 
   return (<>
 
