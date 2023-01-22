@@ -16,8 +16,6 @@ function Login(){
 }
 
 function LoginMsg(props){
-  const {ctx, setCtx}        = React.useContext(UserContext);
-
   return(<>
     <h5>{props.message}</h5>
     <button type="submit" 
@@ -50,9 +48,6 @@ function LoginForm(props){
             console.table(ctx);
         })
         .catch((err)=>{props.setMessage("Please enter username and password.")});
-     
-      // console.log(data);
-      // ctx = data.user;
     })();
 
     props.setStatus('');

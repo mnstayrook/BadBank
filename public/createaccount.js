@@ -26,14 +26,25 @@ function CreateForm(props){
   const [name, setName]         = React.useState('');
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
+  const {ctx, setCtx}        = React.useContext(UserContext);
   
   function handle(){
   console.log(name, email, password);
   const url = `/account/create/${name}/${email}/${password}`;
   (async () => {
-      var res = await fetch(url);
-      var data = await res.json();
-      console.log(data);
+    var res = await fetch(url)
+    //var data = res.json();
+        .then(response => response.json())
+        .then(data => {
+          let message = data.message;
+          props.setMessage(message);
+          console.log('data: ' + data);
+          console.log(message);
+          if (data.user.name !== "Null")
+                setCtx(data.user);
+                console.table(ctx);
+        })
+        .catch((err)=>{props.setMessage("Please enter username and password.")});
     })();
     props.setShow(false);
 };
