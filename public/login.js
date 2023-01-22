@@ -6,7 +6,6 @@ function Login(){
 
   return (
     <Card
-      txtcolor="black"
       header="Login"
       status={status}
       body={show ? 
@@ -27,11 +26,6 @@ function LoginMsg(props){
         Authenticate again
     </button>
     <br/>
-    <button type="submit"
-    className="btn btn-primary"
-    onClick={() => setCtx(null)}>
-      Logout
-    </button>
   </>);
 }
 

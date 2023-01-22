@@ -9,7 +9,8 @@ function Withdraw(){
       status={status}
       body={show ? 
         <WithdrawForm setShow={setShow} setStatus={setStatus} setMessage={setMessage}/> :
-        <WithdrawMsg setShow={setShow} message={message}/>}
+        <WithdrawMsg setShow={setShow} message={message}/>
+        }
     />
   )
 }
@@ -31,7 +32,7 @@ function WithdrawForm(props){
   const [balance, setBalance]       = React.useState('');
   const [data, setData]             = React.useState('');
   const {ctx,setCtx}                         = React.useContext(UserContext);
-  console.table(ctx)
+  //console.table(ctx)
 
   function handle(){
     console.log(email, balance);
@@ -50,7 +51,7 @@ function WithdrawForm(props){
   }
 
   return(<>
-    User: {ctx.name} <br/>
+    {/* User: {ctx.name} <br/> */}
 
     Email<br/>
     <input type="input" 
