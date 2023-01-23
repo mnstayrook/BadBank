@@ -25,6 +25,15 @@ function all(){
     });
 };
 
+function deleteUserByEmail(email){
+    return new Promise((resolve, reject) => {
+        db.collection('users')
+            .deleteOne({email:email}, function(err, result){
+                err ? reject(err) : resolve(result);
+    })
+})
+}
+
 // Finds user by email for functions below
 function findUserByEmail(email){
     console.log("DAL: in findUserByEmail");
@@ -152,4 +161,4 @@ function withdraw(email, withdrawBalance){
     });
 };
 
-module.exports = {create, login, withdraw, deposit, findUserByEmail, findUserByPassword, all};
+module.exports = {create, login, withdraw, deposit, findUserByEmail, findUserByPassword, all, deleteUserByEmail};

@@ -1,14 +1,15 @@
 function CreateAccount(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');
+  const [message, setMessage] = React.useState('outer default message');
 
   return (
     <Card
       header="Create Account"
       status={status}
       body={show ? 
-        <CreateForm setShow={setShow}/> : 
-        <CreateMsg setShow={setShow}/>}
+        <CreateForm setShow={setShow} setStatus={setStatus} setMessage={setMessage}/> : 
+        <CreateMsg setShow={setShow} setStatus={setStatus} message={message}/>}
     />
   )
 }
@@ -27,7 +28,7 @@ function CreateForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
   const {ctx, setCtx}        = React.useContext(UserContext);
-  
+
   function handle(){
   console.log(name, email, password);
   const url = `/account/create/${name}/${email}/${password}`;
@@ -38,9 +39,9 @@ function CreateForm(props){
         .then(data => {
           let message = data.message;
           props.setMessage(message);
-          console.log('data: ' + data);
-          console.log(message);
-          if (data.user.name !== "Null")
+          //console.log('data: ' + data);
+          //console.log(message);
+          if (data.user !== null)
                 setCtx(data.user);
                 console.table(ctx);
         })

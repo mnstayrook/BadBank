@@ -16,14 +16,23 @@ app.get('/account/all', function (req, res) {
     });
 });
 
+app.get('/account/delete/:email', function (req, res) {
+    dal.deleteUserByEmail(req.params.email)
+        .then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            console.log("Root Index: " + err.message);
+            res.send({message:err.message});
+        });
+})
+
 // createaccount.js
 app.get('/account/create/:name/:email/:password', function (req, res) {
     // create user
     dal.create(req.params.name, req.params.email, req.params.password)
         .then((user) => {
             console.log(user);
-            res.send(user);
-            res.send({message:"Root Index: Success"});
+            res.send({user:user, message:"Root Index: Success"});
         }).catch((err) => {
             console.log("Root Index: " + err.message);
             res.send({message:err.message});
