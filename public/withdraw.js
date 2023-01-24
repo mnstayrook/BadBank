@@ -2,6 +2,18 @@ function Withdraw(){
   const [show, setShow]       = React.useState(true);
   const [status, setStatus]   = React.useState('');  
   const [message, setMessage] = React.useState('outer default message');
+  const {ctx,setCtx}                = React.useContext(UserContext);
+
+  if (ctx == null){
+    return(
+      <>
+        <a href="#/login/">
+          <button
+      className="btn btn-primary">Please Login to Continue</button>
+        </a>
+      </>
+    )
+  }; 
 
   return (
     <Card
@@ -13,7 +25,7 @@ function Withdraw(){
         }
     />
   )
-}
+};
 
 function WithdrawMsg(props){
   return(<>
@@ -31,12 +43,12 @@ function WithdrawForm(props){
   const [password, setPassword]     = React.useState('');
   const [balance, setBalance]       = React.useState('');
   const [data, setData]             = React.useState('');
-  const {ctx,setCtx}                         = React.useContext(UserContext);
+  const {ctx,setCtx}                = React.useContext(UserContext);
   //console.table(ctx)
 
   function handle(){
     console.log(email, balance);
-    const url = `/account/withdraw/${email}/${balance}`;
+    const url = `/account/withdraw/${ctx.email}/${balance}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -48,18 +60,15 @@ function WithdrawForm(props){
 
       props.setStatus('');
       props.setShow(false);
+      ctx.balance = Number(ctx.balance) - Number(balance);
+      setCtx(ctx);
   }
 
   return(<>
-    {/* User: {ctx.name} <br/> */}
+    User: {ctx.name} <br/>
+    Current Balance: ${ctx.balance}<br/>
 
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} onChange={e => setEmail(e.currentTarget.value)}/><br/>
-
-    Amount<br/>
+    Amount to Withdraw:<br/>
     <input type="number" 
       className="form-control" 
       placeholder="Enter amount" 
