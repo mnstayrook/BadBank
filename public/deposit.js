@@ -1,5 +1,3 @@
-// still showing a success message when there is no account to deposit into.
-
 function Deposit(){
   const [show, setShow]       = React.useState(true);
   const [status, setStatus]   = React.useState('');
@@ -40,10 +38,10 @@ function DepositMsg(props){
 }; 
 
 function DepositForm(props){
-  const [email, setEmail]   = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [balance, setBalance] = React.useState('');
-  const [data, setData] = React.useState('');
+  const [email, setEmail]           = React.useState('');
+  const [password, setPassword]     = React.useState('');
+  const [balance, setBalance]       = React.useState('');
+  const [data, setData]             = React.useState('');
   const {ctx,setCtx}                = React.useContext(UserContext);
   
   function handle(){
@@ -57,17 +55,22 @@ function DepositForm(props){
         props.setMessage(message);
         console.log("data = " + data);
         console.log(message);
+        console.log(data.isSuccess);
+        console.table(data.user);
+
+        // if the result is a success, set the current user context to the returned user
+        if (data.isSuccess){
+          setCtx(data.user);
+        }
     });
 
     props.setStatus('');
     props.setShow(false);
-    ctx.balance = Number(ctx.balance) + Number(balance);
-    setCtx(ctx);
   }
 
   return(<>
     User: {ctx.name} <br/>
-    Current Balance: ${ctx.balance}<br/>
+    Current Balance: ${Number(ctx.balance)}<br/>
       
     Amount to Deposit:<br/>
     <input type="number" 

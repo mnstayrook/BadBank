@@ -49,6 +49,7 @@ function WithdrawForm(props){
   function handle(){
     console.log(email, balance);
     const url = `/account/withdraw/${ctx.email}/${balance}`;
+    
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -56,17 +57,21 @@ function WithdrawForm(props){
         props.setMessage(message);
         console.log('data = ' + data);
         console.log(message);
+        console.log(data.isSuccess);
+        console.table(data.user);
+        //if the  result is a success, set the current user context to the returned user
+        if (data.isSuccess){
+          setCtx(data.user);
+        }
       });
 
       props.setStatus('');
       props.setShow(false);
-      ctx.balance = Number(ctx.balance) - Number(balance);
-      setCtx(ctx);
   }
 
   return(<>
     User: {ctx.name} <br/>
-    Current Balance: ${ctx.balance}<br/>
+    Current Balance: ${Number(ctx.balance)}<br/>
 
     Amount to Withdraw:<br/>
     <input type="number" 

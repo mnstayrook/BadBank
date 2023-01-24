@@ -32,7 +32,7 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
     dal.create(req.params.name, req.params.email, req.params.password)
         .then((user) => {
             console.log(user);
-            res.send({user:user, message:"Root Index: Success"});
+            res.send({user:user, message:"Success"});
         }).catch((err) => {
             console.log("Root Index: " + err.message);
             res.send({message:err.message});
@@ -44,10 +44,10 @@ app.get('/account/deposit/:email/:balance', function (req, res){
     dal.deposit(req.params.email, req.params.balance)
         .then((user) => {
             console.log(user);
-            res.send({message:"Root Index: Success"});
+            res.send({message:"Success", isSuccess:true, user:user});
         }).catch((err) => {
             console.log("Root Index: " + err.message);
-            res.send({message:err.message});
+            res.send({message:err.message, isSuccess:false});
         });
 });
 
@@ -70,11 +70,11 @@ app.get('/account/withdraw/:email/:balance', function (req, res){
     dal.withdraw(req.params.email, req.params.balance)
         .then((user) => {
             console.log("Root Index: " + user);
-            res.send({message:"Root Index: Success"});
-            res.send(user);
+            console.table(user);
+            res.send({message:"Success",isSuccess:true,user:user});
         }).catch((err) => {
             console.log("Root Index: " + err.message);
-            res.send({message:err.message});
+            res.send({message:err.message,isSuccess:false});
         });
 });
 
