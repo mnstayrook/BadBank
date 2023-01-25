@@ -4,6 +4,8 @@ const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb://127.0.0.1:27017";
 let db = null;
 
+// Connect to MongoDB Atlas
+
 // Connect to Mongo
 MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
   console.log("DAL: Connected successfully to DB server.");
