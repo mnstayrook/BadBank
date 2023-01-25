@@ -2,49 +2,24 @@ const MongoClient = require("mongodb").MongoClient;
 // Windows: 'mongodb://127.0.0.1:27017';
 // Mac:     'mongodb://localhost:27017';
 // const url = "mongodb://127.0.0.1:27017";
-let db = null;
+const uri = process.env.MONGODB_URI;
+
+var db = null;
 
 // Connect to MongoDB Atlas
-async function main() {
-  /**
-   * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-   * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-   */
-  const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-  try {
-    await client.connect();
-    await listDatabases(client);
-  } catch (e){
-    console.error(e);
-  } finally {
-    await client.close();
-  }
-}
-main().catch(console.error);
-
-async function listDatabases(client){
-  databasesList = await client.db().admin().listDatabases();
-
-  console.log("Databases:");
-  databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
-
-// Connect to Mongo
-// MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
-//   console.log("DAL: Connected successfully to DB server.");
-
-//   // Connect to myproject database
-//   db = client.db("myproject");
-// });
+  MongoClient.connect(uri, { useUnifiedTopology: true }, function (err, client) {
+    console.log("DAL: Connected successfully to DB server.");
+  
+    // Connect to myproject database
+    db = client.db("myproject");
+    const collection = db.collection('users');
+  });
 
 // alldata.js
 function all() {
   console.log("DAL: in All Data");
   return new Promise((resolve, reject) => {
-    const customers = db
-      .collection("users")
+      db.collection("users")
       .find({})
       .toArray(function (err, docs) {
         err ? reject(err) : resolve(docs);

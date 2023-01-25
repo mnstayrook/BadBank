@@ -3,7 +3,7 @@ const app           = express();
 const cors          = require("cors");
 const dal           = require("./dal.js");
 
-// const port          = 3000;
+const port          = 3000;
 
 // // used to serve static files from public directory
 app.use(express.static('public'));
@@ -78,5 +78,5 @@ app.get('/account/withdraw/:email/:balance', function (req, res){
         });
 });
 
-//app.listen(port);
-//console.log('Root Index: Running on port ' + port);
+app.listen(port);
+console.log('Root Index: Running on port ' + port);
