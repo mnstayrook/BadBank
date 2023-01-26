@@ -67,9 +67,11 @@ function CreateForm(props){
       onChange={e => setEmail(e.currentTarget.value)}/><br/>
 
     Password<br/>
+    IMPORTANT: Do not use a real password; this is a testing site for features.<br/>
     <input type="password" 
       className="form-control" 
-      placeholder="Enter password" 
+      placeholder="Enter password (not a real one!)" 
+      title="Do not use a real password on this site; for testing only."
       value={password} 
       onChange={e => setPassword(e.currentTarget.value)}/><br/>
 

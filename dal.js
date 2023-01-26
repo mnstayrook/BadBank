@@ -4,6 +4,9 @@ const MongoClient = require("mongodb").MongoClient;
 // const url = "mongodb://127.0.0.1:27017";
 const uri = process.env.MONGODB_URI;
 
+// For direct link to MongoDB database for local testing:
+// const uri = "mongodb+srv://<code goes here>";
+
 var db = null;
 
 // Connect to MongoDB Atlas
